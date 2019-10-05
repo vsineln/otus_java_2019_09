@@ -41,7 +41,7 @@ public class Main {
         System.out.println(result);
     }
 
-    private static void calcTime(Runnable runnable) {
+    public static void calcTime(Runnable runnable) {
         long startTime = System.nanoTime();
         for (int i = 0; i < MEASURE_COUNT; i++) {
             runnable.run();

@@ -17,6 +17,7 @@
 
     <packaging>pom</packaging>
 
+    <!-- region Developers -->
     <developers>
         <developer>
             <name>Sergey</name>
@@ -27,18 +28,37 @@
         <developer>
             <name>Vadim Tisov</name>
         </developer>
+        <developer>
+            <name>Vitaly Kutsenko</name>
+        </developer>
     </developers>
+    <!-- endregion -->
+    <!-- region Samples -->
+        <!--<properties>
+            <java.version>12</java.version>
+            <maven.compiler.release>${java.version}</maven.compiler.release>
+            <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        </properties>-->
+
+    <!-- endregion -->
 
     <modules>
         <module>L01-maven</module>
+        <module>L03_generics_collections</module>
     </modules>
 
     <properties>
+        <!-- region Properties Java -->
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>12</maven.compiler.source>
-        <maven.compiler.target>12</maven.compiler.target>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>12</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
+        <!-- endregion -->
         <com.google.guava.version>27.1-jre</com.google.guava.version>
         <my.variable>42</my.variable>
+        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -47,17 +67,27 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${com.google.guava.version}</version>
+                <exclusions>
+                    <exclusion>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>org.codehaus.mojo:animal-sniffer:1.18</artifactId>
+                    </exclusion>
+                </exclusions>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
     <build>
+        <finalName>ImTheBestApp</finalName>
         <pluginManagement>
             <plugins>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-assembly-plugin</artifactId>
-                    <version>3.1.1</version>
+                    <version>${maven-assembly-plugin.version}</version>
+                    <configuration>
+
+                    </configuration>
                 </plugin>
             </plugins>
         </pluginManagement>
