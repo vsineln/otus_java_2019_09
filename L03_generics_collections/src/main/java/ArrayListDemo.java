@@ -56,7 +56,7 @@ public class ArrayListDemo {
         newCats.add( new WildCat( "pantera" ) );
 
         List<Cat> superCats = new ArrayList<>( newCats );
-        Colleions.copy( superCats, newCats );
+        Collections.copy( superCats, newCats );
 
         WildCat p = (WildCat) superCats.get( 0 );
         p.setName( "leon" );
