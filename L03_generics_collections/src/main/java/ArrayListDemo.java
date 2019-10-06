@@ -52,17 +52,16 @@ public class ArrayListDemo {
         System.out.println("sorted_2:" + sorted);
 
         //
-        List<Cat> newCats = new ArrayList<>(  );
-        newCats.add( new WildCat( "pantera" ) );
+        List<Cat> newCats = new ArrayList<>();
+        newCats.add(new WildCat("pantera"));
 
-        List<Cat> superCats = new ArrayList<>( newCats );
-        Collections.copy( superCats, newCats );
+        List<Cat> superCats = new ArrayList<>(newCats);
+        Collections.copy(superCats, newCats);
 
-        WildCat p = (WildCat) superCats.get( 0 );
-        p.setName( "leon" );
+        WildCat p = (WildCat) superCats.get(0);
+        p.setName("leon");
 
-        System.out.println( "New Cat :" + newCats.get( 0 ).toString() );
-
+        System.out.println("New Cat :" + newCats.get(0).toString());
 
 
     }
