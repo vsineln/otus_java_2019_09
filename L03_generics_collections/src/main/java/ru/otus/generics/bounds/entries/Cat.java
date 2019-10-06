@@ -10,7 +10,7 @@ public class Cat extends Animal {
         return "Cat";
     }
 
-    public String getMyau(){
+    public String getMyau() {
         return "Myauuu";
     }
 

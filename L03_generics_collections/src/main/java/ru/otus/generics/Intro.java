@@ -2,7 +2,6 @@ package ru.otus.generics;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -12,12 +11,12 @@ import java.util.List;
 public class Intro {
 
     public static void main(String[] args) {
-         //new Intro().beforGenerics();
-         new Intro().generics();
+        //new Intro().beforeGenerics();
+        new Intro().generics();
     }
 
     //До Generics
-    private void beforGenerics() {
+    private void beforeGenerics() {
         List list = new ArrayList();
         list.add(4.0);
         list.add(4L);
@@ -28,7 +27,7 @@ public class Intro {
     }
 
     private void printRow(List list) {
-        for(Object item: list) { //Object !!!
+        for (Object item : list) { //Object !!!
             System.out.println(item);
         }
     }
@@ -44,14 +43,14 @@ public class Intro {
         list.add(2);
         list.add(3);
 
-        summInt(list);
+        sumInt(list);
 
         print(list);
     }
 
-    private void summInt(List<Integer> list) {
+    private void sumInt(List<Integer> list) {
         int summ = 0;
-        for(int val: list) {  //конкретный тип
+        for (int val : list) {  //конкретный тип
             summ += val;
         }
         System.out.println("\nsumma:" + summ);
@@ -59,7 +58,7 @@ public class Intro {
 
     private <T> void print(List<T> list) {
         System.out.println("");
-        for(T item: list) {
+        for (T item : list) {
             System.out.println(item);
         }
     }

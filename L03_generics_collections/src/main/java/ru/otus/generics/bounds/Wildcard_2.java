@@ -22,11 +22,11 @@ public class Wildcard_2 {
         List<Cat> catList = new ArrayList<>();
         catList.add(new Cat());
         //printWild(catList);
-        printObj( catList );
+        printObj(catList);
 
-        for ( Cat cat : catList ){
+        for (Cat cat : catList) {
             if (cat instanceof Cat) {
-                System.out.println( cat.getMyau() );
+                System.out.println(cat.getMyau());
             }
         }
 

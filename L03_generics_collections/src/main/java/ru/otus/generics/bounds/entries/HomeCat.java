@@ -11,7 +11,7 @@ public class HomeCat extends Cat {
         this.name = name;
     }
 
-    public void sitOnBoss(){
+    public void sitOnBoss() {
 
     }
 

@@ -17,7 +17,6 @@ public class GenericsBounded<T extends Cat> {
         GenericsBounded<Cat> ok1 = new GenericsBounded<>();
         GenericsBounded<HomeCat> ok2 = new GenericsBounded<>();
         GenericsBounded<WildCat> wk = new GenericsBounded<>();
-
     }
 
 }

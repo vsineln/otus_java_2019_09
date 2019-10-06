@@ -16,13 +16,11 @@ public class GenericsClass<K, V> {
     }
 
     private void print() {
-        map.forEach((key, val) -> {
-            System.out.println("key:" + key +" , val:" + val);
-        });
+        map.forEach((key, val) -> System.out.println("key:" + key + " , val:" + val));
     }
 
     public static void main(String[] args) {
-        GenericsClass<Integer, String> genericsClass =  new GenericsClass<>();
+        GenericsClass<Integer, String> genericsClass = new GenericsClass<>();
         genericsClass.putVal(1, "data1");
         genericsClass.putVal(2, "data2");
         genericsClass.putVal(3, "data3");

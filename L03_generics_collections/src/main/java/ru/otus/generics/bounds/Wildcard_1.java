@@ -24,8 +24,8 @@ public class Wildcard_1 {
 
         List<Cat> catList = new ArrayList<>();
         catList.add(new Cat());
-        catList.add( new HomeCat( "Барсик" ) );
-        catList.add( new WildCat( "Багира" ) );
+        catList.add(new HomeCat("Барсик"));
+        catList.add(new WildCat("Багира"));
 
 //        List<HomeCat> homeCatList = new ArrayList<>(  );
 //
