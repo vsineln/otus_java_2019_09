@@ -1,0 +1,44 @@
+package ru.otus.custom;
+
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ * @author sergey
+ * created on 24.07.18.
+ */
+public class MyMapDemo {
+    public static void main(String[] args) {
+
+        int mapSize = 200_000;
+        String keyStr = "k";
+///////////
+        long sum1 = 0;
+        MyMapInt myMap = new MyMapInt(mapSize * 2);
+        long begin = System.currentTimeMillis();
+
+        for (int idx = 0; idx < mapSize; idx++) {
+            myMap.put(keyStr + idx, idx);
+        }
+
+        for (int idx = 0; idx < mapSize; idx++) {
+            sum1 += myMap.get(keyStr + idx);
+        }
+        System.out.println("MyMapInt time:" + (System.currentTimeMillis() - begin));
+////
+        System.out.println("-----");
+        long sum2 = 0;
+        Map<String, Integer> hashMap = new HashMap<>();
+        begin = System.currentTimeMillis();
+
+        for (int idx = 0; idx < mapSize; idx++) {
+            hashMap.put(keyStr + idx, idx);
+        }
+
+        for (int idx = 0; idx < mapSize; idx++) {
+            sum2 += hashMap.get(keyStr + idx);
+        }
+        System.out.println("HashMap time:" + (System.currentTimeMillis() - begin));
+        System.out.println("sum1:" + sum1 + ", sum2:" + sum2);
+    }
+}
