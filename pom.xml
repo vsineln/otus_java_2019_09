@@ -45,6 +45,7 @@
     <modules>
         <module>L01-maven</module>
         <module>L03_generics_collections</module>
+        <module>L05-qa</module>
     </modules>
 
     <properties>
