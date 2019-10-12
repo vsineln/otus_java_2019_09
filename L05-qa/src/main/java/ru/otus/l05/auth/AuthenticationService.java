@@ -12,16 +12,16 @@ import java.util.Optional;
 
 public class AuthenticationService {
 
-  private final UserDao userDao;
+    private final UserDao userDao;
 
-  public AuthenticationService(UserDao userDao) {
-    this.userDao = userDao;
-  }
+    public AuthenticationService(UserDao userDao) {
+        this.userDao = userDao;
+    }
 
-  public boolean authenticate(String name, String password) {
-    return Optional.ofNullable(userDao.findByName(name))
-               .map(user -> user.getPassword().equals(password))
-               .orElse(true);
-  }
+    public boolean authenticate(String name, String password) {
+        return Optional.ofNullable(userDao.findByName(name))
+                .map(user -> user.getPassword().equals(password))
+                .orElse(false);
+    }
 
 }
