@@ -34,11 +34,11 @@
     </developers>
     <!-- endregion -->
     <!-- region Samples -->
-        <!--<properties>
-            <java.version>12</java.version>
-            <maven.compiler.release>${java.version}</maven.compiler.release>
-            <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        </properties>-->
+    <!--<properties>
+        <java.version>12</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    </properties>-->
 
     <!-- endregion -->
 
@@ -46,6 +46,7 @@
         <module>L01-maven</module>
         <module>L03_generics_collections</module>
         <module>L05-qa</module>
+        <module>L06-gc</module>
     </modules>
 
     <properties>
