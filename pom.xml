@@ -5,95 +5,255 @@
           http://maven.apache.org/POM/4.0.0
           http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-    <!-- Project Object Model -->
-    <!-- All POMs extend the Super POM unless explicitly set -->
-    <!--<parent>*</parent>-->
+  <!-- Project Object Model -->
+  <!-- All POMs extend the Super POM unless explicitly set -->
+  <!--<parent>*</parent>-->
 
-    <groupId>ru.otus</groupId>
-    <artifactId>otus-java</artifactId>
-    <version>2019-09-SNAPSHOT</version>
+  <groupId>ru.otus</groupId>
+  <artifactId>otus-java</artifactId>
+  <version>${revision}</version>
 
-    <packaging>pom</packaging>
+  <packaging>pom</packaging>
 
-    <!-- region Developers -->
-    <developers>
-        <developer>
-            <name>Sergey</name>
-        </developer>
-        <developer>
-            <name>Vyacheslav Lapin</name>
-        </developer>
-        <developer>
-            <name>Vadim Tisov</name>
-        </developer>
-        <developer>
-            <name>Vitaly Kutsenko</name>
-        </developer>
-    </developers>
-    <!-- endregion -->
-    <!-- region Samples -->
-    <!--<properties>
-        <java.version>12</java.version>
-        <maven.compiler.release>${java.version}</maven.compiler.release>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    </properties>-->
+  <developers>
+    <developer>
+      <name>Sergey</name>
+    </developer>
+    <developer>
+      <name>Vyacheslav Lapin</name>
+    </developer>
+    <developer>
+      <name>Vadim Tisov</name>
+    </developer>
+    <developer>
+      <name>Vitaly Kutsenko</name>
+    </developer>
+  </developers>
 
-    <!-- endregion -->
+  <modules>
+    <module>L01-maven</module>
+    <module>L03_generics_collections</module>
+    <module>L05-qa</module>
+    <module>L06-gc</module>
+    <module>L10-annotations</module>
+  </modules>
 
-    <modules>
-        <module>L01-maven</module>
-        <module>L03_generics_collections</module>
-        <module>L05-qa</module>
-        <module>L06-gc</module>
-    </modules>
+  <properties>
 
-    <properties>
-        <!-- region Properties Java -->
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>12</java.version>
-        <maven.compiler.release>${java.version}</maven.compiler.release>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
-        <!-- endregion -->
-        <com.google.guava.version>28.1-jre</com.google.guava.version>
-        <my.variable>42</my.variable>
-        <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
-    </properties>
+    <!-- region general -->
+    <java.version>13</java.version>
+    <revision>2019-09-SNAPSHOT</revision>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <!--endregion-->
 
-    <dependencyManagement>
-        <dependencies>
+    <!--region libs-->
+    <lombok.version>1.18.10</lombok.version>
+    <com.google.guava.version>28.1-jre</com.google.guava.version>
+    <vavr.version>1.0.0-alpha-3</vavr.version>
+
+    <checker.version>2.11.1</checker.version>
+    <annotations.version>17.0.0</annotations.version>
+    <jcip-annotations.version>1.0</jcip-annotations.version>
+    <spotbugs.version>4.0.0-beta4</spotbugs.version>
+    <error_prone_annotations.version>2.3.3</error_prone_annotations.version>
+
+    <junit-jupiter.version>5.3.2</junit-jupiter.version>
+    <assertj.version>3.13.2</assertj.version>
+    <java-hamcrest.version>2.0.0.0</java-hamcrest.version>
+    <mockito.version>2.27.0</mockito.version>
+    <!--endregion-->
+
+    <!--region plugins-->
+    <maven.compiler.release>${java.version}</maven.compiler.release>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version}</maven.compiler.target>
+    <maven-assembly-plugin.version>3.1.1</maven-assembly-plugin.version>
+
+    <lombok-maven-plugin.version>1.18.8.1</lombok-maven-plugin.version>
+    <lombok.verbose>true</lombok.verbose>
+    <lombok.addOutputDirectory>false</lombok.addOutputDirectory>
+    <lombok.sourceDirectory>${project.basedir}/src/main/java</lombok.sourceDirectory>
+    <lombok.testSourceDirectory>${project.basedir}/src/test/java</lombok.testSourceDirectory>
+    <!--endregion-->
+
+    <my.variable>42</my.variable>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>${com.google.guava.version}</version>
+        <exclusions>
+          <exclusion>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>animal-sniffer</artifactId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.projectlombok</groupId>
+        <artifactId>lombok</artifactId>
+        <version>${lombok.version}</version>
+        <scope>provided</scope>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>io.vavr</groupId>
+        <artifactId>vavr</artifactId>
+        <version>${vavr.version}</version>
+      </dependency>
+      <!--region Common Annotations (CheckerFramework, JetBrains, SpotBugs, ErrorProne) -->
+      <dependency>
+        <groupId>org.checkerframework</groupId>
+        <artifactId>checker</artifactId>
+        <version>${checker.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains</groupId>
+        <artifactId>annotations</artifactId>
+        <version>${annotations.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>net.jcip</groupId>
+        <artifactId>jcip-annotations</artifactId>
+        <version>${jcip-annotations.version}</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>com.github.spotbugs</groupId>
+        <artifactId>spotbugs-annotations</artifactId>
+        <version>${spotbugs.version}</version>
+        <optional>true</optional>
+      </dependency>
+      <dependency>
+        <groupId>com.google.errorprone</groupId>
+        <artifactId>error_prone_annotations</artifactId>
+        <version>${error_prone_annotations.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <!--endregion-->
+      <!--region Test dependency management (JUnit-Jupiter, AssertJ, Hamcrest, Mockito, JUnit-Vintage)-->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <version>${assertj.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>java-hamcrest</artifactId>
+        <version>${java-hamcrest.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <version>${mockito.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+        <version>${junit-jupiter.version}</version>
+        <scope>test</scope>
+      </dependency>
+      <!--endregion-->
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+
+      <!--region Test dependencies - JUnit Jupiter, AssertJ, Hamcrest, Mockito -->
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-params</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.assertj</groupId>
+        <artifactId>assertj-core</artifactId>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>java-hamcrest</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-junit-jupiter</artifactId>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.vintage</groupId>
+        <artifactId>junit-vintage-engine</artifactId>
+      </dependency>
+      <dependency>
+        <groupId>org.junit.jupiter</groupId>
+        <artifactId>junit-jupiter-engine</artifactId>
+      </dependency>
+      <!--endregion-->
+
+  </dependencies>
+
+  <build>
+    <finalName>ImTheBestApp</finalName>
+
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>${maven-assembly-plugin.version}</version>
+        </plugin>
+        <plugin>
+          <groupId>org.projectlombok</groupId>
+          <artifactId>lombok-maven-plugin</artifactId>
+          <version>${lombok-maven-plugin.version}</version>
+          <dependencies>
             <dependency>
-                <groupId>com.google.guava</groupId>
-                <artifactId>guava</artifactId>
-                <version>${com.google.guava.version}</version>
-                <exclusions>
-                    <exclusion>
-                        <groupId>org.codehaus.mojo</groupId>
-                        <artifactId>org.codehaus.mojo:animal-sniffer:1.18</artifactId>
-                    </exclusion>
-                </exclusions>
+              <groupId>org.projectlombok</groupId>
+              <artifactId>lombok</artifactId>
+              <version>${lombok.version}</version>
             </dependency>
-        </dependencies>
-    </dependencyManagement>
+          </dependencies>
+          <executions>
+            <execution>
+              <id>delombok</id>
+              <!-- <phase>generate-sources</phase> -->
+              <!--<goals>-->
+              <!--  <goal>delombok</goal>-->
+              <!--</goals>-->
+            </execution>
+            <execution>
+              <id>test-delombok</id>
+              <!-- <phase>generate-test-sources</phase> -->
+              <!--<goals>-->
+              <!--  <goal>testDelombok</goal>-->
+              <!--</goals>-->
+            </execution>
+          </executions>
+        </plugin>
+      </plugins>
+    </pluginManagement>
 
-    <build>
-        <finalName>ImTheBestApp</finalName>
-        <pluginManagement>
-            <plugins>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-assembly-plugin</artifactId>
-                    <version>${maven-assembly-plugin.version}</version>
-                    <configuration>
-
-                    </configuration>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-    </build>
+  </build>
 
 
 </project>
