@@ -2,13 +2,17 @@ package ru.otus.l6.annotations;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import lombok.experimental.NonFinal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PersonTest {
 
+  @NonFinal
   Person person;
+
+  @NonFinal
   Person person2;
 
   @BeforeEach

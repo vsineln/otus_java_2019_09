@@ -17,7 +17,7 @@ import lombok.val;
 @With
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
+@NoArgsConstructor(force = true)
 @FieldDefaults(level = PRIVATE)
 public class Person {
 

@@ -1,8 +1,11 @@
 package ru.otus.l6.reflection;
 
+import lombok.experimental.NonFinal;
+
 public class ReflectionExample {
 
-  private int x;
+  @NonFinal
+  int x;
 
   public ReflectionExample(int x) {
     this.x = x;

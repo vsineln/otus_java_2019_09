@@ -1,7 +1,7 @@
 package ru.otus.l6.demo;
 
 public interface IPerson {
-  String getNamec();
+  String getName();
 
   void setName(String name);
 }

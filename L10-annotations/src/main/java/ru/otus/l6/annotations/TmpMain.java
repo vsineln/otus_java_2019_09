@@ -3,12 +3,14 @@ package ru.otus.l6.annotations;
 import java.sql.Connection;
 import java.sql.SQLException;
 import lombok.experimental.Delegate;
+import lombok.experimental.NonFinal;
 
 //@Slf4j
 @Default(author = "otus")
 public class TmpMain implements Connection {
 
   @Delegate(excludes = AutoCloseable.class)
+  @NonFinal
   Connection connection;
 
   //  @SneakyThrows

@@ -9,8 +9,8 @@ init:
 	echo "\n/.mvn\n/mvnw*\n" >> .git/info/exclude
 
 #	jenv
-	jenv local `cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:project/pom:properties/pom:java.version`.0
-	echo "\n/.java-version\n" >> .git/info/exclude
+#	jenv local `cat pom.xml | xml sel -N pom=http://maven.apache.org/POM/4.0.0 -t -v /pom:project/pom:properties/pom:java.version`.0
+#	echo "\n/.java-version\n" >> .git/info/exclude
 
 #	checkstyler
 	curl -O https://raw.githubusercontent.com/checkstyle/checkstyle/master/src/main/resources/google_checks.xml

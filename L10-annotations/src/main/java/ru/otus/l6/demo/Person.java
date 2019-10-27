@@ -1,19 +1,17 @@
 package ru.otus.l6.demo;
 
 
+import lombok.experimental.NonFinal;
+
 public class Person implements IPerson {
 
   @Length
+  @NonFinal
   private String name;
 
-  //    @Override
-  public String getNameс() {
-    return name;
-  }
-
   @Override
-  public String getNamec() {
-    return null;
+  public String getName() {
+    return name;
   }
 
   @Override

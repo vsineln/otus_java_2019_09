@@ -16,21 +16,21 @@ interface U {/*...*/
 }
 
 class MyBusinessClass {
-  CoolInterface ci;
+//  CoolInterface ci;
   int x;
 
   public MyBusinessClass(int x) {
     this.x = x;
   }
 
-  public CoolInterface getCi() {
-    return ci;
-  }
+//  public CoolInterface getCi() {
+//    return ci;
+//  }
 
-  int myBusinessMethod(int money) {
-    return ci.coolMethod(money >= 100)
-               .getInt();
-  }
+//  int myBusinessMethod(int money) {
+//    return ci.coolMethod(money >= 100)
+//               .getInt();
+//  }
 }
 
 class Cool2BusinessAdapter {
