@@ -16,7 +16,7 @@
         <maven-shade-plugin.version>3.2.1</maven-shade-plugin.version>
     </properties>
 
-    <name>L09-ByteCodes</name>
+    <name>L08-ByteCodes</name>
 
     <dependencies>
         <dependency>

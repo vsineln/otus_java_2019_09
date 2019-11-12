@@ -10,7 +10,7 @@
     <version>${revision}</version>
   </parent>
 
-  <artifactId>L11-java8</artifactId>
+  <artifactId>L10-java8</artifactId>
 
   <dependencies>
 

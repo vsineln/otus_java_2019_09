@@ -37,14 +37,14 @@
     <module>L03_generics_collections</module>
     <module>L05-qa</module>
     <module>L06-gc</module>
-    <module>L10-annotations</module>
-    <module>L11-java8</module>
+    <module>L09-annotations</module>
+    <module>L10-java8</module>
   </modules>
 
   <properties>
 
     <!-- region general -->
-    <java.version>13</java.version>
+    <java.version>12</java.version>
     <revision>2019-09-SNAPSHOT</revision>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
