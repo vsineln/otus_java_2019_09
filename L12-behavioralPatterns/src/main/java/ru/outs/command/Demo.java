@@ -12,6 +12,8 @@ public class Demo {
     executor.addCommand(new Echo());
     executor.addCommand(new AdderABC());
 
+    executor.addCommand(String::toUpperCase);
+
     executor.executeCommands();
   }
 }

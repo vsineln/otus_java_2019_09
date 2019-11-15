@@ -15,6 +15,10 @@ public class Demo {
 
     context.setStrategy(new Taxi());
     context.applyStrategy();
+
+    context.setStrategy(() -> System.out.println("Долетель на ракете"));
+    context.applyStrategy();
+
   }
 
 }
