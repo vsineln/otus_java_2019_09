@@ -1,12 +1,18 @@
 package ru.otus.decorator;
 
-/**
- * Реализовать калькулятор (Сложение, умножение, вычитание) с помощью паттерна декоратор
- * MultiplyArithmeticDecorator multiplyArithmeticDecorator = new MultiplyArithmeticDecorator(
- *  new AddArithmeticDecorator(...)
- * );
- * multiplyArithmeticDecorator.calculate();
- */
+/*
+ *
+ *   Reader---------------                 InputStream
+ *     |                  |                   |
+ *     |                  |                   |
+ *BufferedReader    InputStreamReader  ( FileInputStream )
+ *     |
+ *     |
+ *StringReader
+ *
+ * new BufferedReader(new InputStreamReader(new FileInputStream("test.txt")))
+ *
+ * */
 public class DecoratorDemo {
   public static void main(String[] args) {
     DataSource ds = new DataSourceImpl();
@@ -15,7 +21,6 @@ public class DecoratorDemo {
     printer(new DataSourceDecoratorAdder(ds));
     printer(new DataSourceDecoratorMultiplicator(ds));
     printer(new DataSourceDecoratorAdder(new DataSourceDecoratorMultiplicator(ds)));
-
   }
 
   private static void printer(DataSource ds) {

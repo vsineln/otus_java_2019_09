@@ -2,6 +2,14 @@ package ru.otus.composite;
 
 /**
  * Реализовать калькулятор с помощью паттерна композит
+ *
+ * Composite sum = new AddComposite(
+ *         new MultiplyComposite(
+ *             new DataComposite(2),
+ *             new DataComposite(3)),
+ *         new DataComposite(5)
+ *     );
+ *
  */
 public class CompositeDemo {
   public static void main(String[] args) {

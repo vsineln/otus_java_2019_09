@@ -1,7 +1,7 @@
 package ru.otus.proxy;
 
 /**
- * Добавить слой логирования
+ * Добавить слой логирования (не изменяя текущие реализации интерфейса SecurityAccess)
  */
 public class ProxyDemo {
   public static void main(String[] args) {
