@@ -27,8 +27,8 @@ public class DemoIO {
   public static void main(String[] args) throws IOException, ClassNotFoundException {
     System.out.println("current dir: " + System.getProperty("user.dir"));
     //copyFile();
-  //  writeObject();
-     readObject();
+      writeObject();
+    //readObject();
     // writeTextFile();
     //readTextFile();
 
@@ -51,19 +51,21 @@ public class DemoIO {
   }
 
   private static void writeObject() throws IOException {
-    try (var fileOutputStream = new FileOutputStream(personFile)) {
-      var objectOutputStream = new ObjectOutputStream(fileOutputStream);
-      var person = new Person(92, "SerialPerson", "hidden");
+    try (var fileOutputStream = new FileOutputStream(personFile);
+         var objectOutputStream = new ObjectOutputStream(fileOutputStream)) {
 
+      var person = new Person(92, "SerialPerson", "hidden");
       System.out.println("serializing:" + person);
       objectOutputStream.writeObject(person);
       objectOutputStream.flush();
+
     }
   }
 
   private static void readObject() throws IOException, ClassNotFoundException {
-    try (var fileInputStream = new FileInputStream(personFile)) {
-      var objectInputStream = new ObjectInputStream(fileInputStream);
+    try (var fileInputStream = new FileInputStream(personFile);
+         var objectInputStream = new ObjectInputStream(fileInputStream)) {
+
       var person = (Person) objectInputStream.readObject();
       System.out.println("read object:" + person);
     }
