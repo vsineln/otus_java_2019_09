@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * created on 13.08.18.
  */
 public class LoggerRollingPolicyExample {
-  private static Logger logger = LoggerFactory.getLogger("LoggerRollingPolicyExampleLogName");
+  private static final Logger logger = LoggerFactory.getLogger("LoggerRollingPolicyExampleLogName");
   private long counter = 0;
 
   public static void main(String[] args) throws InterruptedException {

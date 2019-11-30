@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * created on 13.08.18.
  */
 public class LoggerConfigExample {
-  private static Logger logger = LoggerFactory.getLogger(LoggerConfigExample.class);
+  private static final Logger logger = LoggerFactory.getLogger(LoggerConfigExample.class);
   private long counter = 0;
 
   public static void main(String[] args) throws InterruptedException {

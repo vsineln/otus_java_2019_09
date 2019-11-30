@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  * created on 14.08.18.
  */
 public class HelloLogging {
-  private static Logger logger = LoggerFactory.getLogger(HelloLogging.class);
+  private static final Logger logger = LoggerFactory.getLogger(HelloLogging.class);
 
   public static void main(String[] args) {
     new HelloLogging().log();

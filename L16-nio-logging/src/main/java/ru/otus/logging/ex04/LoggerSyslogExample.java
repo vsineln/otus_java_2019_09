@@ -23,7 +23,7 @@ sudo tail -f /var/log/messages
 */
 
 public class LoggerSyslogExample {
-  private static Logger logger = LoggerFactory.getLogger(LoggerSyslogExample.class);
+  private static final Logger logger = LoggerFactory.getLogger(LoggerSyslogExample.class);
   private long counter = 0;
 
   public static void main(String[] args) throws InterruptedException {
