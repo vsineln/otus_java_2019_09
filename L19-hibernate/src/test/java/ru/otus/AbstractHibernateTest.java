@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.stat.EntityStatistics;
 import org.hibernate.stat.Statistics;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import ru.otus.api.model.User;
 import ru.otus.hibernate.HibernateUtils;
@@ -23,6 +24,11 @@ public abstract class AbstractHibernateTest {
   @BeforeEach
   public void setUp() {
     sessionFactory = HibernateUtils.buildSessionFactory(HIBERNATE_CFG_XML_FILE_RESOURCE, User.class);
+  }
+
+  @AfterEach
+  void tearDown() {
+    sessionFactory.close();
   }
 
   protected User buildDefaultUser() {
