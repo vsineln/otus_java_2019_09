@@ -14,16 +14,15 @@ public final class FileSystemHelper {
         String path = null;
         File file = new File(String.format("./%s", fileOrResourceName));
         if (file.exists()) {
-            path = file.toURI().getPath();
+            path = URLDecoder.decode(file.toURI().getPath(), StandardCharsets.UTF_8);
         }
 
         if (path == null) {
             System.out.println("Local file not found, looking into resources");
             path = Optional.ofNullable(FileSystemHelper.class.getClassLoader().getResource(fileOrResourceName))
-                    .orElseThrow(() -> new RuntimeException(String.format("File \"%s\" not found", fileOrResourceName))).getPath();
+                    .orElseThrow(() -> new RuntimeException(String.format("File \"%s\" not found", fileOrResourceName))).toExternalForm();
 
         }
-        return URLDecoder.decode(path, StandardCharsets.UTF_8);
-
+        return path;
     }
 }
