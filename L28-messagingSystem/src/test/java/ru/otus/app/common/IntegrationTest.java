@@ -1,9 +1,7 @@
 package ru.otus.app.common;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
-import org.mockito.Mockito;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.otus.db.DBService;
@@ -28,8 +26,6 @@ public class IntegrationTest {
 
   private static final String FRONTEND_SERVICE_CLIENT_NAME = "frontendService";
   private static final String DATABASE_SERVICE_CLIENT_NAME = "databaseService";
-  private static final String HANDLER_MAPPING_USER_DATA = "userData";
-
 
   private MessageSystem messageSystem;
   private FrontendService frontendService;
@@ -37,29 +33,10 @@ public class IntegrationTest {
   private MsClient frontendMsClient;
 
 
-  @BeforeEach
-  public void setup() {
-    logger.info("setup");
-    messageSystem = new MessageSystemImpl();
-
-    databaseMsClient = spy(new MsClientImpl(DATABASE_SERVICE_CLIENT_NAME, messageSystem));
-    DBService dbService = mock(DBService.class);
-    when(dbService.getUserData(any(Long.class))).thenAnswer(invocation -> String.valueOf((Long)invocation.getArgument(0)));
-    databaseMsClient.addHandler(MessageType.USER_DATA, new GetUserDataRequestHandler(dbService));
-    messageSystem.addClient(databaseMsClient);
-
-    frontendMsClient = spy(new MsClientImpl(FRONTEND_SERVICE_CLIENT_NAME, messageSystem));
-    frontendService = new FrontendServiceImpl(frontendMsClient, DATABASE_SERVICE_CLIENT_NAME);
-    frontendMsClient.addHandler(MessageType.USER_DATA, new GetUserDataResponseHandler(frontendService));
-    messageSystem.addClient(frontendMsClient);
-
-    logger.info("setup done");
-  }
-
-
   @DisplayName("Базовый сценарий получения данных")
   @RepeatedTest(1000)
   public void getDataById() throws Exception {
+    createMessageSystem(true);
     int counter = 3;
     CountDownLatch waitLatch = new CountDownLatch(counter);
 
@@ -77,11 +54,11 @@ public class IntegrationTest {
   @DisplayName("Выполнение запроса после остановки сервиса")
   @RepeatedTest(1000)
   public void getDataAfterShutdown() throws Exception {
+    createMessageSystem(true);
     messageSystem.dispose();
 
     CountDownLatch waitLatchShutdown = new CountDownLatch(1);
 
-    Mockito.reset(frontendMsClient);
     when(frontendMsClient.sendMessage(any(Message.class))).
         thenAnswer(invocation -> {
           waitLatchShutdown.countDown();
@@ -94,5 +71,58 @@ public class IntegrationTest {
     assertThat(result).isFalse();
 
     logger.info("done");
+  }
+
+  @DisplayName("Тестируем остановку работы MessageSystem")
+  @RepeatedTest(1000)
+  public void stopMessageSystem() throws Exception {
+    createMessageSystem(false);
+    int counter = 100;
+    CountDownLatch messagesSentLatch = new CountDownLatch(counter);
+    CountDownLatch messageSystemDisposed = new CountDownLatch(1);
+
+    IntStream.range(0, counter).forEach(id -> {
+          frontendService.getUserData(id, data -> {
+          });
+          messagesSentLatch.countDown();
+        }
+    );
+    messagesSentLatch.await();
+    assertThat(messageSystem.currentQueueSize()).isEqualTo(counter);
+
+    messageSystem.start();
+    disposeMessageSystem(messageSystemDisposed::countDown);
+
+    messageSystemDisposed.await();
+    assertThat(messageSystem.currentQueueSize()).isEqualTo(0);
+
+    logger.info("done");
+  }
+
+
+  private void createMessageSystem(boolean startProcessing) {
+    logger.info("setup");
+    messageSystem = new MessageSystemImpl(startProcessing);
+
+    databaseMsClient = spy(new MsClientImpl(DATABASE_SERVICE_CLIENT_NAME, messageSystem));
+    DBService dbService = mock(DBService.class);
+    when(dbService.getUserData(any(Long.class))).thenAnswer(invocation -> String.valueOf((Long) invocation.getArgument(0)));
+    databaseMsClient.addHandler(MessageType.USER_DATA, new GetUserDataRequestHandler(dbService));
+    messageSystem.addClient(databaseMsClient);
+
+    frontendMsClient = spy(new MsClientImpl(FRONTEND_SERVICE_CLIENT_NAME, messageSystem));
+    frontendService = new FrontendServiceImpl(frontendMsClient, DATABASE_SERVICE_CLIENT_NAME);
+    frontendMsClient.addHandler(MessageType.USER_DATA, new GetUserDataResponseHandler(frontendService));
+    messageSystem.addClient(frontendMsClient);
+
+    logger.info("setup done");
+  }
+
+  private void disposeMessageSystem(Runnable callback) {
+    try {
+      messageSystem.dispose(callback);
+    } catch (InterruptedException ex) {
+      logger.error(ex.getMessage(), ex);
+    }
   }
 }
