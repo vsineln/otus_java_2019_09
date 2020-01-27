@@ -11,7 +11,7 @@ import org.junit.jupiter.params.aggregator.ArgumentsAccessor;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 import ru.otus.AbstractHibernateTest;
-import ru.otus.api.model.User;
+import ru.otus.core.model.User;
 
 import javax.persistence.Query;
 

@@ -1,4 +1,4 @@
-package ru.otus.api.dao;
+package ru.otus.core.dao;
 
 public class UserDaoException extends RuntimeException {
   public UserDaoException(Exception ex) {

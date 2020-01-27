@@ -1,10 +1,10 @@
-package ru.otus.api.service;
+package ru.otus.core.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.api.dao.UserDao;
-import ru.otus.api.model.User;
-import ru.otus.api.sessionmanager.SessionManager;
+import ru.otus.core.dao.UserDao;
+import ru.otus.core.model.User;
+import ru.otus.core.sessionmanager.SessionManager;
 
 import java.util.Optional;
 

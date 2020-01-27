@@ -1,4 +1,4 @@
-package ru.otus.api.sessionmanager;
+package ru.otus.core.sessionmanager;
 
 
 public class SessionManagerException extends RuntimeException {

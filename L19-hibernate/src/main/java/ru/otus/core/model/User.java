@@ -1,12 +1,22 @@
-package ru.otus.api.model;
+package ru.otus.core.model;
 
-/**
- * @author sergey
- * created on 03.02.19.
- */
+
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
 public class User {
-  private final long id;
-  private final String name;
+
+  @Id
+  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @Column(name = "id")
+  private long id;
+
+  @Column(name = "name")
+  private String name;
+
+  public User() {
+  }
 
   public User(long id, String name) {
     this.id = id;
@@ -19,6 +29,10 @@ public class User {
 
   public String getName() {
     return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 
   @Override

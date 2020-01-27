@@ -1,6 +1,6 @@
-package ru.otus.api.service;
+package ru.otus.core.service;
 
-import ru.otus.api.model.User;
+import ru.otus.core.model.User;
 import java.util.Optional;
 
 public interface DBServiceUser {

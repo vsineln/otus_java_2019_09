@@ -1,7 +1,7 @@
-package ru.otus.api.dao;
+package ru.otus.core.dao;
 
-import ru.otus.api.model.User;
-import ru.otus.api.sessionmanager.SessionManager;
+import ru.otus.core.model.User;
+import ru.otus.core.sessionmanager.SessionManager;
 
 import java.util.Optional;
 

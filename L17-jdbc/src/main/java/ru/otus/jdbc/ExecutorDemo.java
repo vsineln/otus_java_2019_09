@@ -9,7 +9,7 @@ import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.otus.api.model.User;
+import ru.otus.core.model.User;
 
 /**
  * @author sergey

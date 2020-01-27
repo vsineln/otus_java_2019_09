@@ -7,11 +7,11 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.otus.api.dao.UserDao;
-import ru.otus.api.model.User;
-import ru.otus.api.service.DbServiceException;
-import ru.otus.api.service.DbServiceUserImpl;
-import ru.otus.api.sessionmanager.SessionManager;
+import ru.otus.core.dao.UserDao;
+import ru.otus.core.model.User;
+import ru.otus.core.service.DbServiceException;
+import ru.otus.core.service.DbServiceUserImpl;
+import ru.otus.core.sessionmanager.SessionManager;
 
 import java.util.Optional;
 
