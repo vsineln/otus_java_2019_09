@@ -27,7 +27,7 @@ import java.util.*;
 public class Main {
     private static final int MEASURE_COUNT = 1;
 
-    public static void main(String... args) {
+    public static void main(String... __) {
         List<Integer> example = new ArrayList<>();
         int min = 0;
         int max = 999_999;
