@@ -26,7 +26,7 @@ public class Client {
         PrintWriter out = new PrintWriter(clientSocket.getOutputStream(), true);
         BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
 
-        for (int idx = 0; idx < 3; idx++) {
+        for (int idx = 0; idx < 10; idx++) {
           logger.info("sending to server");
           out.println("testData:" + idx);
           String resp = in.readLine();

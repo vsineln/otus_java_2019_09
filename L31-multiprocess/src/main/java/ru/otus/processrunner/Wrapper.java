@@ -13,76 +13,82 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 public class Wrapper {
-  private static final Logger logger = LoggerFactory.getLogger(Wrapper.class);
+  private static final Logger logger = LoggerFactory.getLogger( Wrapper.class );
 
-  public static void main(String[] args) throws IOException, InterruptedException, ExecutionException {
-    // simpleWrap();
-       monitorWrap();
-  //  notifyWrap();
+  public static void main( String[] args ) throws IOException, InterruptedException, ExecutionException {
+    //simpleWrap();
+    //monitorWrap();
+    notifyWrap();
   }
 
   private static void simpleWrap() throws IOException {
-    logger.info("begin");
+    logger.info( "begin" );
 
-    var currentDir = new File("./L30-multiprocess/src/main/java");
-    new ProcessBuilder("java", "ru.otus.processrunner.Job")
+    var currentDir = new File( "./L31-multiprocess/src/main/java" );
+
+    Process process = new ProcessBuilder( "java", "ru.otus.processrunner.Job" )
         .inheritIO()
-        .directory(currentDir)
+        .directory( currentDir )
         .start();
 
-    logger.info("end");
+
+    logger.info( "end" );
   }
 
   private static void monitorWrap() throws IOException, InterruptedException {
-    logger.info("begin");
-    var currentDir = new File("./L30-multiprocess/src/main/java");
+    logger.info( "begin" );
 
-    var procBuilder = new ProcessBuilder("java", "ru.otus.processrunner.Job")
-        .directory(currentDir);
+    var currentDir = new File( "./L31-multiprocess/src/main/java" );
+
+    var procBuilder = new ProcessBuilder( "java", "ru.otus.processrunner.Job" )
+        .inheritIO()
+        .directory( currentDir );
 
     Map<String, String> envProp = procBuilder.environment();
-    envProp.put("propName", "PropOk");
+    envProp.put( "propName", "PropOk" );
 
     var process = procBuilder.start();
 
-    try (var reader = new BufferedReader(new InputStreamReader(process.getInputStream()));) {
+
+    try ( var reader = new BufferedReader( new InputStreamReader( process.getInputStream() ) ); ) {
       String line;
-      while ((line = reader.readLine()) != null) {
-        logger.info("proc out: {}", line);
+      while ( ( line = reader.readLine() ) != null ) {
+        logger.info( "proc out: {}", line );
       }
     }
 
-    logger.info("waiting for process...");
-    process.waitFor(1, TimeUnit.MINUTES);
+    logger.info( "waiting for process..." );
+    process.waitFor( 1, TimeUnit.MINUTES );
 
-    logger.info("end");
+    logger.info( "end" );
   }
 
   private static void notifyWrap() throws IOException {
-    logger.info("begin");
+    logger.info( "begin" );
 
-    var currentDir = new File("./L30-multiprocess/files");
-    var process = new ProcessBuilder("cmp", "file1.txt", "file2.txt")
+    var currentDir = new File( "./L31-multiprocess/files" );
+    var process = new ProcessBuilder( "cmp", "file1.txt", "file2.txt" )
         .inheritIO()
-        .directory(currentDir)
+        .directory( currentDir )
         .start();
 
 
     CompletableFuture<Process> compareResult = process.onExit();
-    logger.info("next action 1...");
-    logger.info("next action 2...");
-    logger.info("next action 3...");
+    logger.info( "next action 1..." );
+    logger.info( "next action 2..." );
+    logger.info( "next action 3..." );
+    logger.info( "next action 4..." );
+    logger.info( "next action 5..." );
 
-    compareResult.thenApply(proc -> {
-      if (proc.exitValue() == 0) {
-        logger.info("files equal");
+    compareResult.thenApply( proc -> {
+      if ( proc.exitValue() == 0 ) {
+        logger.info( "files equal" );
       } else {
-        logger.info("files NOT equal");
+        logger.info( "files NOT equal" );
       }
       return true;
-    });
+    } );
 
-
-    logger.info("end");
+    logger.info( "end" );
   }
 }

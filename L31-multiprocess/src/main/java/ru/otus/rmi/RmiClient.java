@@ -14,6 +14,5 @@ public class RmiClient {
     var dataFromServer = echoInterface.echo("hello");
     logger.info("response from the server:{}", dataFromServer);
 
-
   }
 }

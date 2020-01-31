@@ -32,7 +32,6 @@ public class IntegrationTest {
   private MsClient databaseMsClient;
   private MsClient frontendMsClient;
 
-
   @DisplayName("Базовый сценарий получения данных")
   @RepeatedTest(1000)
   public void getDataById() throws Exception {
@@ -52,7 +51,7 @@ public class IntegrationTest {
   }
 
   @DisplayName("Выполнение запроса после остановки сервиса")
-  @RepeatedTest(1000)
+  @RepeatedTest(2)
   public void getDataAfterShutdown() throws Exception {
     createMessageSystem(true);
     messageSystem.dispose();
