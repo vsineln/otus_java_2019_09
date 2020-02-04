@@ -1,6 +1,5 @@
 package ru.otus.appcontainer;
 
-import org.apache.commons.lang3.tuple.Pair;
 import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
@@ -12,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,12 +53,9 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     private List<Method> getMethodsOrdered(Method[] methods) {
-        List<Method> methodList = new LinkedList<>();
-        Arrays.stream(methods).filter(method -> method.getAnnotation(AppComponent.class) != null)
-            .map(method -> Pair.of(method.getAnnotation(AppComponent.class).order(), method))
-            .sorted(Comparator.comparingInt(Pair::getLeft))
-            .forEach(pair -> methodList.add(pair.getRight()));
-        return methodList;
+        return Arrays.stream(methods).filter(method -> method.getAnnotation(AppComponent.class) != null)
+            .sorted(Comparator.comparingInt(method -> method.getAnnotation(AppComponent.class).order()))
+            .collect(Collectors.toList());
     }
 
     private String getComponentName(Method m) {
