@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import ru.otus.appcontainer.api.AppComponent;
 import ru.otus.appcontainer.api.AppComponentsContainer;
 import ru.otus.appcontainer.api.AppComponentsContainerConfig;
+import ru.otus.appcontainer.exception.ComponentsContainerException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -11,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,22 +30,21 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         checkConfigClass(configClass);
         try {
             Object instance = configClass.getDeclaredConstructor().newInstance();
-            List<Pair<Integer, Method>> list = getMethodsOrdered(configClass.getMethods());
-            for (Pair<Integer, Method> pair : list) {
-                Method m = pair.getRight();
+            List<Method> list = getMethodsOrdered(configClass.getMethods());
+            for (Method m : list) {
                 Class<?>[] params = m.getParameterTypes();
-                Object o;
-                if (params.length == 0) {
-                    o = m.invoke(instance);
-                } else {
-                    Object[] paramComponent = Arrays.stream(params).map(this::getAppComponent).toArray();
-                    o = m.invoke(instance, paramComponent);
-                }
+                Object[] paramComponent = Arrays.stream(params).map(this::getAppComponent).toArray();
+                Object o = m.invoke(instance, paramComponent);
                 appComponents.add(o);
-                appComponentsByName.put(getComponentName(m), o);
+
+                String componentName = getComponentName(m);
+                if (appComponentsByName.containsKey(componentName)) {
+                    throw new ComponentsContainerException("Duplicated component: " + componentName);
+                }
+                appComponentsByName.put(componentName, o);
             }
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
-            e.printStackTrace();
+            throw new ComponentsContainerException(e.getMessage());
         }
     }
 
@@ -53,11 +54,13 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
         }
     }
 
-    private List<Pair<Integer, Method>> getMethodsOrdered(Method[] methods) {
-        return Arrays.stream(methods).filter(method -> method.getAnnotation(AppComponent.class) != null)
+    private List<Method> getMethodsOrdered(Method[] methods) {
+        List<Method> methodList = new LinkedList<>();
+        Arrays.stream(methods).filter(method -> method.getAnnotation(AppComponent.class) != null)
             .map(method -> Pair.of(method.getAnnotation(AppComponent.class).order(), method))
             .sorted(Comparator.comparingInt(Pair::getLeft))
-            .collect(Collectors.toList());
+            .forEach(pair -> methodList.add(pair.getRight()));
+        return methodList;
     }
 
     private String getComponentName(Method m) {
