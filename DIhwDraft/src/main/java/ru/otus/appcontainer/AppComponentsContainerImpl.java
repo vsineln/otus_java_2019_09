@@ -7,7 +7,6 @@ import ru.otus.appcontainer.exception.ComponentsContainerException;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -17,8 +16,8 @@ import java.util.stream.Collectors;
 
 public class AppComponentsContainerImpl implements AppComponentsContainer {
 
-    private final List<Object> appComponents = new ArrayList<>();
     private final Map<String, Object> appComponentsByName = new HashMap<>();
+    private final Map<Class, Object> appComponentsByInterface = new HashMap<>();
 
     public AppComponentsContainerImpl(Class<?> initialConfigClass) {
         processConfig(initialConfigClass);
@@ -33,13 +32,13 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
                 Class<?>[] params = m.getParameterTypes();
                 Object[] paramComponent = Arrays.stream(params).map(this::getAppComponent).toArray();
                 Object o = m.invoke(instance, paramComponent);
-                appComponents.add(o);
 
                 String componentName = getComponentName(m);
                 if (appComponentsByName.containsKey(componentName)) {
-                    throw new ComponentsContainerException("Duplicated component: " + componentName);
+                    throw new ComponentsContainerException(String.format("Duplicated component: %s", componentName));
                 }
                 appComponentsByName.put(componentName, o);
+                appComponentsByInterface.put(m.getReturnType(), o);
             }
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             throw new ComponentsContainerException(e.getMessage());
@@ -53,7 +52,7 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
     }
 
     private List<Method> getMethodsOrdered(Method[] methods) {
-        return Arrays.stream(methods).filter(method -> method.getAnnotation(AppComponent.class) != null)
+        return Arrays.stream(methods).filter(method -> method.isAnnotationPresent(AppComponent.class))
             .sorted(Comparator.comparingInt(method -> method.getAnnotation(AppComponent.class).order()))
             .collect(Collectors.toList());
     }
@@ -65,13 +64,17 @@ public class AppComponentsContainerImpl implements AppComponentsContainer {
 
     @Override
     public <C> C getAppComponent(Class<C> componentClass) {
-        return (C) appComponents.stream()
-            .filter(component -> componentClass.isAssignableFrom(component.getClass()))
-            .findAny().orElseThrow(() -> new RuntimeException("Component is not found"));
+        if(!appComponentsByInterface.containsKey(componentClass)){
+            throw new ComponentsContainerException(String.format("Component is not found: %s", componentClass.getSimpleName()));
+        }
+        return (C) appComponentsByInterface.get(componentClass);
     }
 
     @Override
     public <C> C getAppComponent(String componentName) {
+        if(!appComponentsByName.containsKey(componentName)){
+            throw new ComponentsContainerException(String.format("Component is not found: %s", componentName));
+        }
         return (C) appComponentsByName.get(componentName);
     }
 }
